@@ -1,0 +1,70 @@
+﻿@page
+@model YogaPoseRandomizer.Pages.ClassSettingsModel
+@using Models
+@using Components
+@{
+    ViewData["Title"] = "Class Settings";
+}
+
+@(await Html.RenderComponentAsync<ClassBuildStage>(RenderMode.ServerPrerendered, new { Stage = "2" }))
+
+<h3>Class Settings</h3>
+
+<form method="post">
+    <div class="form-group mt-4">
+        <label asp-for="PoseDuration"></label>
+        <input asp-for="PoseDuration" class="form-control form-control-sm" />
+        <span asp-validation-for="PoseDuration"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrepDuration"></label>
+        <input asp-for="PrepDuration" class="form-control form-control-sm" />
+        <span asp-validation-for="PrepDuration"></span>
+    </div>
+
+    @*Radio buttons*@
+    <div class="form-group">
+        <label class="d-block" asp-for="Shavasana"></label>
+        <div class="form-check-inline">
+            @foreach (var shav in Model.ShavasanaOptions)
+            {
+                <label class="form-check-label mr-3">
+                    <input class="form-check-inline" type="radio" onclick="change(this.value)" asp-for="Shavasana" value="@shav" />@shav
+                </label>
+            }
+        </div>
+        <span class="d-block" asp-validation-for="Shavasana"></span>
+    </div>
+
+    <div class="form-group d-none" id="shavaDuration">
+        <label asp-for="ShavasanaDuration"></label>
+        <input id="input" asp-for="ShavasanaDuration" class="form-control form-control-sm" />
+        <span asp-validation-for="ShavasanaDuration"></span>
+    </div>
+
+    @*Navigation buttons*@
+    <div class="d-flex justify-content-end mt-4">
+        <input class="btn btn-primary m-1" type="submit" value="Next" />
+    </div>
+</form>
+
+@section scripts{
+    <script src="_framework/blazor.server.js"></script>
+    <script>
+        function change(id) {
+
+            if (id == "Before Class" || id == "After Class") {
+                document.getElementById("shavaDuration").className = "form-group";
+                document.getElementById("input").value = 5;
+            }
+            else if (id == "None") {
+                document.getElementById("shavaDuration").className = "form-group d-none";
+                document.getElementById("input").value = 0;
+            }
+        }
+    </script>
+
+    @*This enables client side validation*@
+    <partial name="_ValidationScriptsPartial" />
+}
+

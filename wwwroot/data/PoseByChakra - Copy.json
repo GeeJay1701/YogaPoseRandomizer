@@ -1,0 +1,275 @@
+[
+{
+  "Id": "Crown",
+  "ChakraNum": 1,
+  "Location": "Top of the head",
+  "Element": "Light",
+  "Benefit": "Connection",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Lotus",
+	  "Description": "Sit on the mat with your legs extended in front of you. Bend your right knee, gently brining your right to the crease of your left hip. Bend your left knee, gently brining your left foot to the rease of your right hip. The soles of your feet should be pointing toward the ceiling. Rest your hands on your knees with your palms facing up. Hold for a few moments, then release and repeat the pose, this time with your right foot on top.",
+	  "Picture": "Lotus.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Staff",
+	  "Description": "Sit wiht your legs extended on your mat straight out in front of you. (If your back starts to round, sit on a cushion or folded blanket.) Place your palms on the mat alongside your outer hips. Press down through your palms, lengthening the spine as you sit taller (but without your legs or buttocks lifting off the mat). Breath softly and fluidly.",
+	  "Picture": "Staff.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Bound Angle",
+	  "Description": "Sit with your back straight and legs out in front of you. Bend your knees outward and pull your heels toward your pelvis. Bring the soles of your feet together as you lower your knees toward the mat in a gentle stretch.",
+	  "Picture": "BoundAngle.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Cow Face",
+	  "Description": "From Staff Pose, bend your knees and slide your left foot underneath your right knee so your feet are at either side of your body and your knees are staked. Reacch your left arm up alongside your ear; bend that arm and rest the fingertips on your upper back. Stretch your right arm out with your thumb pointing toward the floor. Bend your right elbow and place the back of your hand on your back; you'll either move your hands toward each other until they touch if you are able, or keep your hands where they are. Repeat on the other side.",
+	  "Picture": "CowFace.png"
+    },
+        {
+      "id": 5,
+      "Name": "Seated Twist",
+	  "Description": "Sit in a cross-legged position, with one leg crossed over the other. Place your right hand on youe left knee. Rest your left palm on the mat behind you. Gently twist, turning your gaze over your left shoulder. Repeat on the other side.",
+	  "Picture": "SeatedTwist.png"
+    }
+  ]
+},
+{
+  "Id": "Third Eye",
+  "Location": "Forehead between the eyes",
+  "Element": "Air",
+  "ChakraNum": 2,
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Pigeon",
+	  "Description": "From Downward-Facing Dog, bend your right knee in toward your chest, then turn the kne to the right and down toward the mat. Gently place the shin behind your right wrist. Look back at your left leg and adjust until the leg is posistioned flat against the mat, with the knee pressing squarly into the mat. With your pelvis now square, place your fingeretips on the mat in front of you. Breath in, then exhale, and walk your hands forward as far you can comfortably go, resting your forehead on the mat if you are able to.",
+	  "Picture": "Pigeon.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Standing Forward Bend",
+	  "Description": "Stand with your feet together, with your big toes and heels touching. Keep your feet relaxed. Exhale as you bring your arms out to the sides and bend from your hips, diving forward. Bring your palms tot he mat in front of you. If they don't reach, bend your knees or let your arms hang. Relax your head toward the mat.",
+	  "Picture": "StandingForwardBend.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Seated Forward Bend",
+	  "Description": "From the Staff Pose, press your legs into the earth. Flex your feet and reach your arms out in front of you. Exhale and bend forward over your legs, going only as far as you can, keeping the back long and taut. (If the back rounds, sit up and try the pose again.) If you can reach your feet, grasp then with your hands. If not, leave your arms reaching forward as far as they will go.",
+	  "Picture": "SeatedForwardBend.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Head-to-Knee",
+	  "Description": "From Staff Pose, bend your right knee and place the sole of your right foot against your left inner thigh. (If your lower back rounds, sit on a blanket or a cushion.) Lengthen your spin; then bend forward as far as comfortable. If you can, reach forward and hold onto the edges of your left foot with both hands. If not, leave your hands resting on your right shin. Draw your shoulders away from your ears as you press equally through the ball and heel of your right foot. repeat on the other side.",
+	  "Picture": "Head-to-Knee.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Seated Wide-Legged Forward Bend",
+	  "Description": "From Staff Pose, lean back, placing your hands behind you, and open your legs wide apart. (If you need support, sit on a folded blanket.) Breath deeply as you gently len forward and bring your arms in front of you. Walk your hands forward, between your wide legs, going only as far as your body will comfortably allow.",
+	  "Picture": "SeatedWide-LeggedForwardBend.png"
+    }
+  ]
+},
+{
+  "Id": "Throat",
+  "ChakraNum": 3,
+  "Location": "Throat",
+  "Element": "Metal",
+  "Benefit": "Communication",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Prayer Twist",
+	  "Description": "From Mountain Pose, bend your knees and lower your hips toward the mat. Keep both feet flat on the floor as you squat. Bring your hands together, forming a prayer position against your sternum. As you exhale, lean forward slightly and twist your body to the right, bringing your left elbow to the outside of your right knee. Engage your core and inner thighs. Hold for 5 breaths. Repeat on the other side.",
+	  "Picture": "PrayerTwist.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Cat-Cow",
+	  "Description": "Kneel on the mat with your knees directly below your hips and hands directly below your shoulders. Let your head rest in a neutral position with eyes looking down at the mat. Inhale and drop your belly toward the mat, brining your chin up and lifting your gaze toward the ceiling. As you exhale, round your spine up toward the ceiling and release your head toward the mat. Repeat ten times.",
+	  "Picture": "Cat-Cow.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Scale",
+	  "Description": "Begin in a seated position, with your legs crossed and the top of each foot reasting on the opposite thigh. Place your hands on the floor next to your hips. Exhale and press your palms down, lifting yourself off the mat. Hold yourself suspended for several moments, then slowly lower your body down to the mat.",
+	  "Picture": "Scale.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Happy Baby",
+	  "Description": "Lying on your back, draw your knees towards your armpits with your shins perpendicular to the floor. Grab the outside of your feet with your hands. Flexing through your heels, push your feet up into your hands and gently pull with your hands to create resistance.",
+	  "Picture": "HappyBaby.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Full Boat",
+	  "Description": "From Staff Pose, lean back, bend your knees, and draw your knees toward your hest, lifting your feet off the mat. Straighten your legs as far as your comfortably can, feeling your abdminal muscles engage. To go farther, reach your arms straight out in front of you, on either side of your outer thighs. Hold this position for several breaths, balancing on you buttocks, gazing at your toes and breathing consciously and continuously.",
+	  "Picture": "FullBoat.png"
+    }
+  ]
+},
+{
+  "Id": "Heart",
+  "ChakraNum": 4,
+  "Location": "Center of the chest",
+  "Element": "Wood",
+  "Benefit": "Love",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Fish",
+	  "Description": "Lie on your back, with your upper body propped up by your elbows. Press your palms and forearms into the mat as you arch your chest, gently arching your back. As you breath into your chest, deepen the backbend. Slowly begin to move your chin away from your chest, mindfully allowing the crown of your head to come to the mat behind you. Squeeze your shoulder blades together and bring the shoulders away from your ears. Keep you legs active as you breath.",
+	  "Picture": "Fish.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Cobra",
+	  "Description": "Lie on your stomach, forehead resting on the mat. Place your palms on the mat underneath your shoulders. Hug your inner thighs toward eah other an press down through your palms, gently lifting your head and upper chest off the mat. Hug your elbows in alongside your rib cage and straighten your arms as much as is comfortable for you.",
+	  "Picture": "Cobra.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Locust",
+	  "Description": "Lie on your stomah with your forehead resting on the mat and your arms straight along your sIdes, palms facing the floor. Tuck your tailbone under slightly to reduce pressure on your lower back. Hug your inner thighs together, and lift your arms, legs and head off the mat. Rather then trying to left your body high, strech it long instead, reahing your head and toes away from each other.",
+	  "Picture": "Locust.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Bow",
+	  "Description": "Lie on your stomach with your forehead resting on the mat. Bend both knees and reaech your arms back to grab your outer ankles. Press your ankles back into your hands to lift your head and chest off the mat. Slightly tuck your tailbone under to keep your lower bak long and supported.",
+	  "Picture": "Bow.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Bridge",
+	  "Description": "Lie on your back with your arms by your sides. Place both feet on the mat in line with your sit bones, with your heels lighlty touching your buttocks. Take a deep breath in as you press down through your feet and lift your hips up, keeping your feet rooting into the mat. Clasp your hands together on the mat underneath your hips, and shimmy your shoulders underneath you. Press down through your clasped hands to help you lift your hips higher.",
+	  "Picture": "Bridge.png"
+    }
+  ]
+},
+{
+  "Id": "Solar Plexus",
+  "ChakraNum": 5,
+  "Location": "Upper abdomen",
+  "Element": "Fire",
+  "Benefit": "Confidence",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Lunge",
+	  "Description": "Stand with your feet together, with the big toes and heels touching. Keep your feet relaxed. Bring one foot bak into a lunge, with the knee of that leg resting on the mat behind you, and the other knee at a right angle with the mat. As you inhale, bring your arms up overhead and bring your palms together.",
+	  "Picture": "Lunge.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Mountain with arms up",
+	  "Description": "Stand with your feet together, with the big toes and heels touching. Keep your feet relaxed. Inhaale as you bring your arms overhead, palms touching. Look up at your hands and slighlty bend back from your waist.",
+	  "Picture": "MountainWithArmsUp.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Plank",
+	  "Description": "Starting on your knees, lean forward and plalce your hands flat on the mat in front of you. Straighten your arms, and shift your weight onto your toes and hands, so your knees rise off the mat. Bring your body into a straight diagonal line from the top of your head to your heels. Avoid locking your arms; keep then very slightly bent. Bring back your shoulders so your chest lifts slightly, and press firmly into the mat with your palms while maintaing energy in your legs.",
+	  "Picture": "Plank.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Upward-Facing Dog",
+	  "Description": "Lower your body onto the mat to rest on your stomach, place your hands beneath your shoulders, and point your toes. Press your palms down into the mat, and slowly lift up the upper body by pressing into your palms, opeing your hest. If this is comfortable, go deeper by straightening the arms so that the lower body lifts, with only the tops of the feet touching the mat. Keep the legs engaged and the buttocks relaxed. Roll your shoulders back and down and open your chest as you gaze forward.",
+	  "Picture": "Upward-FacingDog.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Downward-Facing Dog",
+	  "Description": "Start in Plank Pose. As you inhale, lift your hips toward the sky so your body forn two sides of a triangle, with your hips at the highest point. Press your palms firmly into the floor, and move your torso towards your thighs, lengthening your spine and your breath.",
+	  "Picture": "Downward-FacingDog.png"
+    }
+  ]
+},
+{
+  "Id": "Sacral",
+  "ChakraNum": 6,
+  "Location": "Lower abdomen",
+  "Element": "Water",
+  "Benefit": "Pleasure",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Half Moon",
+	  "Description": "From Extended Triangle Pose, with your right leg turned forward, place your left hand on your left hip. Bend your right knee and slid your right fingertips about a foot forward, touching the mat. Once you achieve a strong foundation, straighten your right knee and lift your left leg off the mat, flexing your foot by pressing through your left heel. To take it farther, reach your left arm skyward and gaze up. Repeat on the other side.",
+	  "Picture": "HalfMoon.png"
+    },
+    {
+      "Id": 2,
+      "Name": "Tree",
+	  "Description": "From Mountain Pose, bring your weight onto your left foot. Place the sole of your right foot either below your left knee or as high up on your inner thigh as you can, and keep it there. When you have achieved a string foundation standing on one foot, reach your arms toward the sky, growing like a tree. Repeat on the other side.",
+	  "Picture": "Tree.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Dancer",
+	  "Description": "From Mountain Pose, bring your weight onto your right foot. Bend your left knee and bring your left heel toward your buttocks. Reach back with your left hand (using a waal for support, if needed) and gently grasp the inner arch of the foot. Breath steadily as you reah forward with the right arm, tilting your body forward while simultaneously lifting the left leg back and up as it presses into your hand. Repeat on the other side.",
+	  "Picture": "Dancer.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Eagle",
+	  "Description": "From Mountain Pose, bend both knees and cross your left thigh over your right thigh. Deepen the twist by wrapping the top of your left foot around the back of your right calf. Inhale and reach both arms out in front of you, crossing then in front of your body, right arm above left. Then bend the elbows and wrap your forearms into a twist until your left fingertips press against your right palm. Repeat on the other side.",
+	  "Picture": "Eagle.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Side Plank",
+	  "Description": "Starting in a push-up position, roll your entire body to the right until the outer edge of your right foot rests against the mat. Stak your left foot on top of your right foot so your legs are stacked as well. Engage your legs, tuck your tailbone under slightly, and reach your left arm up to the sky so your whole body is supported only by the right hand and the right foot. To take it garther, gaze up at your left hand. Repeat on the other side.",
+	  "Picture": "SidePlank.png"
+    }
+  ]
+},
+{
+  "Id": "Root",
+  "ChakraNum": 7,
+  "Location": "Base of the spine",
+  "Element": "Earth",
+  "Benefit": "Groundedness",
+  "Poses": [
+    {
+      "Id": 1,
+      "Name": "Extended Triangle",
+	  "Description": "From Mountain Pose, step your feet wide apart. Turn your right foot out and your left foot slightly in. Inhale deeply and reah your arms out wide so they are parallel with the floor. As you exhale, reach out to the right, tilt downward at the waist, and plae your right hand lightly on your right shin, Lift your left arm up to the sky, imagining a straight liane all the way from your right fingertips to your lift fingertips. Gaze up at your left thumb, Repeat on the other side.",
+	  "Picture": "ExtendedTriangle.png"
+	  
+    },
+    {
+      "Id": 2,
+      "Name": "Chair Pose",
+	  "Description": "Stand with your feet together and your arms by your sides. Take a big breath in, then exhale and bend your knees deeply, like you're sitting on a chair. Reach your arms up in a gentle diagonal, with you elbows alongside your ears. Gaze straight ahead.",
+	  "Picture": "Chair.png"
+    },
+        {
+      "Id": 3,
+      "Name": "Warrior I",
+	  "Description": "From Mountain Pose, step your feet wide apart. Turn your right foot out and your left foot slightly in. Square your hips toward your right foot. Inhale deeply, and as you exhale, bend your right knee, moving your right leg into a perpendicular angle, with your right thigh parallel with the floor (or as close as you an come while remaining comfortable). Rach your arms up alongside your ears and gaze softly forward. Repeat on the other side.",
+	  "Picture": "WarriorI.png"
+    },
+        {
+      "Id": 4,
+      "Name": "Warrior II",
+	  "Description": "From Mountain Pose, step your feet wide apart with your right foot parallel with the floor. Turn your left foot out to the left so that your toes are pointing to the left wall. Inhale deeply, and as you exhale, bed your right knee until your right thigh is parallel with the floor (or as cloase as you can get while remaining comfortable). Turn your head to gaze over your right hand. Repeat on the other side.",
+	  "Picture": "WarriorII.png"
+    },
+        {
+      "Id": 5,
+      "Name": "Extended Side Angle",
+	  "Description": "From Mountain Pose, step your feet wide apart, with your feet parallel. Turn your right foot out, bend your right knee to 90 degrees, and turn your left foot slightly in toward your body. Tilting downward at the waist to place your right hand at the outside of your right foot, sweep the left arm up and alongside your left ear, creating a diagonal line from your left ankle all the way to your left fingertips. Keeping your gze soft, look up under your left arm. Repeat on the other side.",
+	  "Picture": "ExtendedSideAngle.png"
+    }
+  ]
+}
+]

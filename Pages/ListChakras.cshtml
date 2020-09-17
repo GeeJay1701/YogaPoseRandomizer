@@ -1,0 +1,37 @@
+﻿@page
+@model YogaPoseRandomizer.Pages.ListChakrasModel
+@using YogaPoseRandomizer.Models
+@{
+}
+
+<h3>Chakras</h3>
+
+<div class="card-columns" style="width=150px;height=300px">
+    @foreach (Chakra c in Model.ChakraList)
+    {
+    <div class="card">
+
+        @*<div class="card-img" style="background-image: url('/images/@c.Picture')"></div>*@
+        <div class="card-header text-center">
+            <img src="/images/@c.Picture" alt="Card image">
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">@c.Id</h4>
+            <p class="card-text">@c.Location</p>
+
+        </div>
+        <div class="card-body">
+            <button class="btn-sm btn-primary" data-toggle="collapse" data-target="#info-@c.ChakraNum">More info</button>
+            <div id="info-@c.ChakraNum" class="collapse">
+                <h6 class="mt-3">Poses</h6>
+                <ul>
+                    @foreach (Pose p in c.Poses)
+                    {
+                        <li>@p.Name</li>
+                    }
+                    </ul>
+            </div>
+        </div>
+    </div>
+    }
+</div>

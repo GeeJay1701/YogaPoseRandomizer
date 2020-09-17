@@ -1,0 +1,49 @@
+﻿@page
+@model YogaPoseRandomizer.Pages.ClassConfirmationModel
+@using Models
+@using Components
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Class Confirmation";
+
+    // Retrieve the YogaClass from the TempData
+    var yc = JsonSerializer.Deserialize<YogaClass>((String)TempData.Peek("YogaClass"));
+}
+
+@(await Html.RenderComponentAsync<ClassBuildStage>(RenderMode.ServerPrerendered, new { Stage = "3" }))
+
+<div class="d-flex justify-content-center">
+    <div class="d-flex flex-column mr-5">
+        @foreach (var pose in yc.PoseList)
+        {
+            <div class="d-inline-flex">
+                <img src="/images/@pose.Picture" style="width:50px;height:50px;" />
+                <div class="align-self-center">@pose.Name</div>
+            </div>
+        }
+    </div>
+    <div class="d-flex flex-column align-self-center mr-4">
+        <div class="d-inline-flex mb-2">
+            <div>Pose Duration:</div>
+            <div class="ml-auto">@yc.PoseDuration (minutes)</div>
+        </div>
+        <div class="d-inline-flex mb-2">
+            <div>Duration between poses:</div>
+            <div class="ml-auto">@yc.PrepDuration (seconds)</div>
+        </div>
+        <div class="d-inline-flex mb-2">
+            <div>Shavasana:</div>
+            <div class="ml-auto">@yc.Shavasana</div>
+        </div>
+        <div class="d-inline-flex mb-2">
+            <div>Shavasana Length:</div>
+            <div class="ml-auto">@yc.ShavasanaDuration (minutes)</div>
+        </div>
+        <div class="d-inline-flex mb-4">
+            <div>Total Class Time:</div>
+            <div class="ml-auto">@yc.TotalClassTimeDsp (mm:ss)</div>
+        </div>
+        <a class="btn btn-primary" href="/Confirmation">Start</a>
+
+    </div>
+</div>

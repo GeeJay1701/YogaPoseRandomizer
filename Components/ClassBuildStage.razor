@@ -1,0 +1,45 @@
+﻿
+<div class="row justify-content-center pb-4 mb-0">
+    <div class="col-sm-3">
+        <h1 class="d-inline-block"><span class=@BadgeClass1>1</span></h1>
+        <h5 class="d-inline-block"><span>Select poses</span></h5>
+    </div>
+    <div class="col-sm-3 d-inline-block">
+        <h1 class="d-inline-block"><span class=@BadgeClass2>2</span></h1>
+        <h5 class="d-inline-block"><span>Class Settings</span></h5>
+    </div>
+    <div class="col-sm-3">
+        <h1 class="d-inline-block"><span class=@BadgeClass3>3</span></h1>
+        <h5 class="d-inline-block"><span>Confirm Class</span></h5>
+    </div>
+</div>
+
+@code {
+    [Parameter] public String Stage { get; set; }
+
+    String BadgeClass1 = "badge badge-Light";
+    String BadgeClass2 = "badge badge-light";
+    String BadgeClass3 = "badge badge-light";
+
+    const String CurrentStage = "badge badge-secondary";
+
+    protected override void OnInitialized()
+    {
+
+        switch (Stage)
+        {
+            case "1":
+                BadgeClass1 = CurrentStage;
+                break;
+            case "2":
+                BadgeClass2 = CurrentStage;
+                break;
+            case "3":
+                BadgeClass3 = CurrentStage;
+                break;
+            default:
+                break;
+        }
+
+    }
+}

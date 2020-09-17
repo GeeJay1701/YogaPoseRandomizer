@@ -1,0 +1,80 @@
+﻿@page
+@model YogaPoseRandomizer.Pages.ClassPoseSelectModel
+@using Models;
+@using Components;
+@{
+    ViewData["Title"] = "Take a Class";
+    int index = 0;
+}
+
+@*Call the ClassBuildStage component to display the stage of the process*@
+@(await Html.RenderComponentAsync<ClassBuildStage>(RenderMode.ServerPrerendered, new { Stage = "1" }))
+
+<h3>Root to Head</h3>
+
+<form method="post">
+    <div class="row justify-content-end">
+        <div class="col-sm-2">
+            <input class="btn btn-primary" type="submit" value="Next" />
+        </div>
+    </div>
+
+    @foreach (Pose p in @Model.PoseList)
+    {
+        <div class="row border-bottom border-gray py-2 my-0">
+            <div class="col-sm-2 align-self-center">
+                <img class="img-fluid" id="pic-@index" src="/images/@p.Picture" />
+            </div>
+            <div class="col-sm-6 align-self-center">
+                <span id="desc-@index">@p.Description</span>
+            </div>
+            <input asp-for="PoseList[index].Name" type="hidden" id="input-name-@index" />
+            <input asp-for="PoseList[index].Id" type="hidden" id="input-id-@index" />
+            <input asp-for="PoseList[index].Description" type="hidden" id="input-desc-@index" />
+            <input asp-for="PoseList[index].Picture" type="hidden" id="input-pic-@index" />
+            <input asp-for="ChakraList[index].Id" type="hidden" id="input-chakra-@index" />
+
+            <div class="col-sm-2 align-self-center">
+                <label class="d-block" for="poses">To change the pose</label>
+                @*Build a drop down list box of poses*@
+                <select class="d-block" asp-for="@p.Name" id="select-@index" onchange="SetSelectedPose(this.value,@index,'@Model.ChakraList[index].Id')">
+                    @for (int j = 0; j < @Model.ChakraList[index].Poses.Length - 1; j++)
+                    {
+                        <option value="@Model.ChakraList[index].Poses[j].Name">@Model.ChakraList[index].Poses[j].Name</option>
+                    }
+                </select>
+            </div>
+
+            @{index++;}
+        </div>
+
+    }
+    <div class="row justify-content-end">
+        <div class="col-sm-2">
+            <input class="btn btn-primary" type="submit" value="Next" />
+        </div>
+    </div>
+
+</form>
+
+<script src="_framework/blazor.server.js"></script>
+<script type="text/javascript">
+    function SetSelectedPose(newValue, index, chakraId) {
+
+        //Set the new value for the pose
+        document.getElementById('input-name-'.concat(index)).value = newValue;
+
+        //Fetch the details of the pose from the DB.
+        fetch(`/ClassPoseSelect?handler=PoseImage&index=${index}&poseName=${newValue}&chakraId=${chakraId}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                document.getElementById('pic-'.concat(index)).src = '/images/' + result.picture;
+                document.getElementById('input-pic-'.concat(index)).value = '/images/' + result.picture;
+                document.getElementById('input-desc-'.concat(index)).value = result.description;
+                document.getElementById('desc-'.concat(index)).textContent = result.description;
+                document.getElementById('input-id-'.concat(index)).value = result.id;
+            });
+    }
+</script>
