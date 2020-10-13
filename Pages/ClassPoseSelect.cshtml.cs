@@ -16,6 +16,8 @@ namespace YogaPoseRandomizer.Pages
         private readonly JsonFileChakraService ChakraService;
         public List<Chakra> ChakraList { get; private set; }
 
+        public String Sequence { get; private set; }
+
         [BindProperty]
         public List<Pose> PoseList { get; set; }
 
@@ -23,9 +25,23 @@ namespace YogaPoseRandomizer.Pages
         {
             ChakraService = cs;
         }
-        public void OnGet()
+        public void OnGet(String sequence)
         {
+            // Retrieve the list of Chakras. Already sorted by ChakraNum (Desending) root-to-crown
             ChakraList = ChakraService.GetChakras().ToList<Chakra>();
+
+            //Change the Chakra sequence if needed.
+            switch (sequence)
+            {
+                case "root-to-crown":
+                    break;
+                case "crown-to-root":
+                    ChakraList = ChakraList.OrderBy(Chakra => Chakra.ChakraNum).ToList();
+                    break;
+                default:
+                    break;
+            }
+            Sequence = sequence;
 
             PoseList = new List<Pose>();
             int selectedPose;
@@ -41,14 +57,13 @@ namespace YogaPoseRandomizer.Pages
             }
         }
 
-        public JsonResult OnGetPoseImage(int index, String poseName, String chakraId)
+        public JsonResult OnGetPoseImage(String poseName, String chakraId)
         {
             //Retrieve the entire chakra list
             List<Chakra> ChakraList = ChakraService.GetChakras().ToList<Chakra>();
 
-            //Using the index value and pose name retrieve the Pose.
+            //Using the Chakra Id and pose name retrieve the Pose.
             Pose p = ChakraList.Where(x => x.Id == chakraId).FirstOrDefault().Poses.Where(x => x.Name == poseName).FirstOrDefault();
-            //Pose p = ChakraList[index].Poses.Where(x => x.Name == poseName).FirstOrDefault();
 
             return new JsonResult(p);
         }

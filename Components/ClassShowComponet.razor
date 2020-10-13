@@ -1,0 +1,185 @@
+﻿@using Models
+@using System.Timers
+@using System.IO
+
+<h3>ClassShowComponet</h3>
+<div class="d-inline-flex">
+    <div>Remaining Class Time:</div>
+    <div class="ml-auto">@RemainingClassTimeDsp</div>
+</div>
+<div class="d-inline-flex">
+    <div>Remaining Event Time:</div>
+    <div class="ml-auto">@RemainingEventTimeDsp</div>
+</div>
+<button class="btn btn-primary" @onclick="StartStopTimer">@StartStopButtonTxt</button>
+
+@code {
+    [Parameter]
+    public YogaClass YogaClass { get; set; }
+
+    [Parameter]
+    public String WebRootPath { get; set; }
+
+    TimeSpan RemainingClassTime;
+    TimeSpan RemainingEventTime;
+
+    String RemainingClassTimeDsp;
+    String RemainingEventTimeDsp;
+    String StartStopButtonTxt = "Start";
+
+    int CurrentEventIndex = 0;
+
+    List<ClassEvent> cEventList;
+
+    bool ClassStarted = false;
+
+    TimeSpan zeroDuration = TimeSpan.FromSeconds(0.0);
+
+    Timer ClassTimer;
+
+    public class ClassEvent
+    {
+        public String Type { get; set; }
+        public TimeSpan Duration { get; set; }
+        public int PoseIndex { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        //Set the total class time.
+        RemainingClassTime = new TimeSpan(0, YogaClass.TotalPoseMinutes + YogaClass.ShavasanaDuration, YogaClass.TotalPoseIntervalSeconds);
+
+        // Format the time for mm:ss (use @"mm\:ss" or "mm\\:ss"
+        RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
+
+        //Build list of class events
+        cEventList = new List<ClassEvent>();
+
+        //Check if there is a Shavasana before class starts
+        if (YogaClass.Shavasana == "Before Class")
+        {
+            ClassEvent prepEvent = new ClassEvent();
+            prepEvent.Type = "PREP";
+            prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
+            cEventList.Add(prepEvent);
+
+            ClassEvent poseEvent = new ClassEvent();
+            poseEvent.Type = "SHAVA";
+            poseEvent.Duration = new TimeSpan(0, YogaClass.ShavasanaDuration, 0);
+            cEventList.Add(poseEvent);
+        }
+
+        //Add Poses to the event list
+        for (int i = 0; i < YogaClass.PoseList.Count(); i++)
+        {
+            ClassEvent prepEvent = new ClassEvent();
+            prepEvent.Type = "PREP";
+            prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
+            cEventList.Add(prepEvent);
+
+            ClassEvent poseEvent = new ClassEvent();
+            poseEvent.Type = "POSE";
+            poseEvent.Duration = new TimeSpan(0, YogaClass.PoseDuration, 0);
+            poseEvent.PoseIndex = i;
+            cEventList.Add(poseEvent);
+        }
+
+        //Check if there is a Shavasana After class
+        if (YogaClass.Shavasana == "After Class")
+        {
+            ClassEvent prepEvent = new ClassEvent();
+            prepEvent.Type = "PREP";
+            prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
+            cEventList.Add(prepEvent);
+
+            ClassEvent poseEvent = new ClassEvent();
+            poseEvent.Type = "SHAVA";
+            poseEvent.Duration = new TimeSpan(0, 0, YogaClass.ShavasanaDuration);
+            cEventList.Add(poseEvent);
+        }
+
+        //Display the information for the first event.
+        RemainingEventTime = cEventList[CurrentEventIndex].Duration;
+        RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+
+        //Begin the Timer
+        StartStopTimer();
+    }
+
+    public void StartStopTimer()
+    {
+        //Check is the timer exists or not.
+        if (ClassTimer == null)
+        {
+            // Setup the Timer
+            ClassTimer = new Timer(1000);
+            ClassTimer.Elapsed += OnTimedEvent;
+            ClassTimer.AutoReset = true;
+            ClassTimer.Enabled = true;
+
+            //Now the timer is running, change the button text.
+            StartStopButtonTxt = "Pause";
+            ClassStarted = true;
+        }
+        else
+        {
+            // Timer exists. check if we stop or restart.
+            if (ClassTimer.Enabled == true)
+            {
+                ClassTimer.Stop();
+                StartStopButtonTxt = "Resume";
+            }
+            else
+            {
+                ClassTimer.Start();
+                StartStopButtonTxt = "Pause";
+            }
+        }
+    }
+
+    public void OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        RemainingClassTime = RemainingClassTime.Subtract(TimeSpan.FromSeconds(1));
+        RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
+        RemainingEventTime = RemainingEventTime.Subtract(TimeSpan.FromSeconds(1));
+        RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+
+        //Check is Class has ended.
+        if (RemainingClassTime > zeroDuration)
+        {   //Class is still in active
+
+
+            //Check if the event is still active
+            if (RemainingEventTime > zeroDuration)
+            {//Yup this acitve
+
+            }
+            else
+            {
+                CurrentEventIndex += 1;
+                RemainingEventTime = cEventList[CurrentEventIndex].Duration;
+                RemainingEventTime = RemainingEventTime.Subtract(TimeSpan.FromSeconds(1));
+                RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+
+                string[] paths = { @"d:\archives", "2001", "audio", "Bell.wav" };
+                string fullPath = Path.Combine(paths);
+                Console.WriteLine(fullPath);
+
+                String wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(wrp);
+                player.Play();
+            }
+
+            //Because changes are happening within a timer event we need to let the
+            //system know that the state of certain elements have changed.
+            InvokeAsync(StateHasChanged);
+        }
+        else
+        {   //Class has end.  Clean up the timer
+            ClassTimer.Stop();
+            ClassTimer.Dispose();
+        }
+
+    }
+
+}

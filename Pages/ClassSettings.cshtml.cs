@@ -12,10 +12,10 @@ namespace YogaPoseRandomizer.Pages
 {
     public class ClassSettingsModel : PageModel
     {
-        [BindProperty, Required, Display(Name = "Pose Duration (minutes)"), Range(1, 5, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        [BindProperty, Required, Display(Name = "Pose Duration (minutes)"), Range(1, 5, ErrorMessage = "Value must be between {1} and {2} minutes.")]
         public int PoseDuration { get; set; } = 4;
 
-        [BindProperty, Required, Display(Name = "Duration between poses (seconds)"), Range(15, 60, ErrorMessage = "Value must be between {1} and {2}.")]
+        [BindProperty, Required, Display(Name = "Duration between poses (seconds)"), Range(15, 60, ErrorMessage = "Value must be between {1} and {2} seconds.")]
         public int PrepDuration { get; set; } = 30;
 
         [BindProperty, Required, Display(Name = "Shavasana")]
@@ -23,7 +23,7 @@ namespace YogaPoseRandomizer.Pages
 
         public string[] ShavasanaOptions = new[] { "Before Class", "After Class", "None" };
 
-        [BindProperty, Display(Name = "Duration(minutes)"), Range(0, 30, ErrorMessage = "Value for {0} may not exceed {2} minutes.")]
+        [BindProperty, Display(Name = "Duration (minutes)"), Range(0, 30, ErrorMessage = "Value may not exceed {2} minutes.")]
         public int ShavasanaDuration { get; set; } = 0;
 
         public void OnGet()

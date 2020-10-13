@@ -1,0 +1,16 @@
+﻿@page
+@model YogaPoseRandomizer.Pages.ClassShowModel
+@using Models
+@using Components
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Taking a Class";
+
+    // Retrieve the YogaClass from the TempData
+    var yc = JsonSerializer.Deserialize<YogaClass>((String)TempData["YogaClass"]);
+    var wrp = Model.WebHostEnvironment.WebRootPath;
+}
+
+@(await Html.RenderComponentAsync<ClassShowComponet>(RenderMode.ServerPrerendered, new { YogaClass = yc, WebRootPath = wrp}))
+
+<script src="_framework/blazor.server.js"></script>

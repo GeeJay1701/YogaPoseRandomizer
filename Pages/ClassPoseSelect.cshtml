@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{sequence=root-to-crown}"
 @model YogaPoseRandomizer.Pages.ClassPoseSelectModel
 @using Models;
 @using Components;
@@ -10,7 +10,7 @@
 @*Call the ClassBuildStage component to display the stage of the process*@
 @(await Html.RenderComponentAsync<ClassBuildStage>(RenderMode.ServerPrerendered, new { Stage = "1" }))
 
-<h3>Root to Head</h3>
+<h3>@Model.Sequence</h3>
 
 <form method="post">
     <div class="row justify-content-end">
@@ -65,7 +65,7 @@
         document.getElementById('input-name-'.concat(index)).value = newValue;
 
         //Fetch the details of the pose from the DB.
-        fetch(`/ClassPoseSelect?handler=PoseImage&index=${index}&poseName=${newValue}&chakraId=${chakraId}`)
+        fetch(`/ClassPoseSelect?handler=PoseImage&poseName=${newValue}&chakraId=${chakraId}`)
             .then((response) => {
                 return response.json();
             })
