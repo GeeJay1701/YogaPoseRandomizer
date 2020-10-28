@@ -34,14 +34,15 @@ namespace YogaPoseRandomizer.Pages
             switch (sequence)
             {
                 case "root-to-crown":
+                    Sequence = "Root to Crown";
                     break;
                 case "crown-to-root":
+                    Sequence = "Crown to Root";
                     ChakraList = ChakraList.OrderBy(Chakra => Chakra.ChakraNum).ToList();
                     break;
                 default:
                     break;
             }
-            Sequence = sequence;
 
             PoseList = new List<Pose>();
             int selectedPose;
