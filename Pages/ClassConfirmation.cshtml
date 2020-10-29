@@ -12,38 +12,42 @@
 
 @(await Html.RenderComponentAsync<ClassBuildStage>(RenderMode.ServerPrerendered, new { Stage = "3" }))
 
-<div class="d-flex justify-content-center">
+
+<div class="row d-flex justify-content-center">
     <div class="d-flex flex-column mr-5">
         @foreach (var pose in yc.PoseList)
         {
             <div class="d-inline-flex">
-                <img src="/images/@pose.Picture" style="width:50px;height:50px;" />
+                <img class="mr-2" src="/images/@pose.Picture" style="width:75px;height:75px;" />
                 <div class="align-self-center">@pose.Name</div>
             </div>
         }
     </div>
-    <div class="d-flex flex-column align-self-center mr-4">
-        <div class="d-inline-flex mb-2">
-            <div>Pose Duration:</div>
-            <div class="ml-auto">@yc.PoseDuration (minutes)</div>
+    <div class="d-flex flex-column align-self-center my-5">
+        <div class="row mb-2">
+            <div class="col-6">Pose Duration:</div>
+            <div class="col-2 align-self-end">@yc.PoseDuration</div>
+            <div class="col-2 align-self-end">(minutes)</div>
         </div>
-        <div class="d-inline-flex mb-2">
-            <div>Duration between poses:</div>
-            <div class="ml-auto">@yc.PrepDuration (seconds)</div>
+        <div class="row mb-2">
+            <div class="col-6">Duration between poses:</div>
+            <div class="col-2 align-self-end">@yc.PrepDuration</div>
+            <div class="col-2 align-self-end">(minutes)</div>
         </div>
-        <div class="d-inline-flex mb-2">
-            <div>Shavasana:</div>
-            <div class="ml-auto">@yc.Shavasana</div>
+        <div class="row mb-2">
+            <div class="col-6">Shavasana:</div>
+            <div class="col-2 align-self-end">@yc.Shavasana</div>
         </div>
-        <div class="d-inline-flex mb-2">
-            <div>Shavasana Length:</div>
-            <div class="ml-auto">@yc.ShavasanaDuration (minutes)</div>
+        <div class="row mb-2">
+            <div class="col-6">Shavasana Duration:</div>
+            <div class="col-2 align-self-end">@yc.ShavasanaDuration</div>
+            <div class="col-2 align-self-end">(minutes)</div>
         </div>
-        <div class="d-inline-flex mb-4">
-            <div>Total Class Time:</div>
-            <div class="ml-auto">@yc.TotalClassTimeDsp (mm:ss)</div>
+        <div class="row mb-5">
+            <div class="col-6">Total Class Time:</div>
+            <div class="col-2 align-self-end">@yc.TotalClassTimeDsp</div>
+            <div class="col-2 align-self-end">(mm:ss)</div>
         </div>
-        <a class="btn btn-primary" href="/ClassShow">Start</a>
 
+        <a class="btn btn-primary" href="/ClassShow">Start</a>
     </div>
-</div>
