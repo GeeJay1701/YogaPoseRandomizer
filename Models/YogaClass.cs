@@ -20,7 +20,7 @@ namespace YogaPoseRandomizer.Models
         { get { return PoseDuration * PoseList.Length; } }
 
         public int TotalPoseIntervalSeconds
-        { get { return PrepDuration * (PoseList.Length - 1); } }
+        { get { return PrepDuration * (PoseList.Length); } }
 
         public string TotalClassTimeDsp
         {

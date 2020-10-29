@@ -2,7 +2,7 @@
 @using System.Timers
 @using System.IO
 
-<h3>ClassShowComponet</h3>
+@*<h3>ClassShowComponet</h3>
 <div class="d-inline-flex">
     <div>Remaining Class Time:</div>
     <div class="ml-auto">@RemainingClassTimeDsp</div>
@@ -10,8 +10,35 @@
 <div class="d-inline-flex">
     <div>Remaining Event Time:</div>
     <div class="ml-auto">@RemainingEventTimeDsp</div>
+</div>*@
+
+<div class="progress">
+    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:@TotalPercent%">@Math.Round(TotalPercent)%</div>
 </div>
+<br />
+
+
+
+<ul class="list-group">
+    <li class="list-group-item currPose">
+        <img  class="center"src="/images/@CurrentEventPicture" width="200" height="200" /><br />
+        <span>@CurrentEventName</span>
+        <br /><br />
+        <div class="badge-pill badge-dark display-4 slidePill d-flex justify-content-center">&nbsp;@RemainingEventTime.ToString("m\\:ss")&nbsp;</div>
+        <br />
+    </li>
+    <li class="list-group-item currPose">Upcoming: @NextEventName</li>
+</ul>
+
 <button class="btn btn-primary" @onclick="StartStopTimer">@StartStopButtonTxt</button>
+@if (CurrentEventIndex != cEventList.Count)
+{
+    <button class="btn btn-primary" @onclick="skip">Skip</button>
+}
+else
+{
+    <button class="btn btn-primary" disabled>Skip</button>
+}
 
 @code {
     [Parameter]
@@ -27,18 +54,33 @@
     String RemainingEventTimeDsp;
     String StartStopButtonTxt = "Start";
 
-    int CurrentEventIndex = 0;
+    String NextEventName;
+    String CurrentEventName;
+    String CurrentEventPicture;
 
+    double TotalPercent = 0;
+    double PrepPercent;
+    double PosePercent;
+    double ShavaPercent;
+    
+    int ChakraCounter = 0;
+    int CurrentEventIndex = 0;
+    ClassEvent CurrentClassEvent;
     List<ClassEvent> cEventList;
 
-    bool ClassStarted = false;
-
     TimeSpan zeroDuration = TimeSpan.FromSeconds(0.0);
-
     Timer ClassTimer;
+
+    string[] paths = { @"d:\archives", "2001", "audio", "Bell.wav" };
+    string fullPath;
+    String wrp;
+    System.Media.SoundPlayer player;
+
 
     public class ClassEvent
     {
+        public String Name { get; set; }
+        public String Picture { get; set; }
         public String Type { get; set; }
         public TimeSpan Duration { get; set; }
         public int PoseIndex { get; set; }
@@ -60,11 +102,15 @@
         {
             ClassEvent prepEvent = new ClassEvent();
             prepEvent.Type = "PREP";
+            prepEvent.Picture = "Prep.png";
+            prepEvent.Name = "Prep";
             prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
             cEventList.Add(prepEvent);
 
             ClassEvent poseEvent = new ClassEvent();
             poseEvent.Type = "SHAVA";
+            poseEvent.Picture = "Shavasana.png";
+            poseEvent.Name = "Shavasana";
             poseEvent.Duration = new TimeSpan(0, YogaClass.ShavasanaDuration, 0);
             cEventList.Add(poseEvent);
         }
@@ -74,11 +120,15 @@
         {
             ClassEvent prepEvent = new ClassEvent();
             prepEvent.Type = "PREP";
+            prepEvent.Picture = "Prep.png";
+            prepEvent.Name = "Prep";
             prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
             cEventList.Add(prepEvent);
 
             ClassEvent poseEvent = new ClassEvent();
             poseEvent.Type = "POSE";
+            poseEvent.Picture = YogaClass.PoseList[i].Picture;
+            poseEvent.Name = YogaClass.PoseList[i].Name;
             poseEvent.Duration = new TimeSpan(0, YogaClass.PoseDuration, 0);
             poseEvent.PoseIndex = i;
             cEventList.Add(poseEvent);
@@ -89,18 +139,38 @@
         {
             ClassEvent prepEvent = new ClassEvent();
             prepEvent.Type = "PREP";
+            prepEvent.Picture = "Prep.png";
+            prepEvent.Name = "Prep";
             prepEvent.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
             cEventList.Add(prepEvent);
 
             ClassEvent poseEvent = new ClassEvent();
             poseEvent.Type = "SHAVA";
+            poseEvent.Picture = "Shavasana.png";
+            poseEvent.Name = "Shavasana";
             poseEvent.Duration = new TimeSpan(0, 0, YogaClass.ShavasanaDuration);
             cEventList.Add(poseEvent);
         }
 
         //Display the information for the first event.
-        RemainingEventTime = cEventList[CurrentEventIndex].Duration;
+        CurrentClassEvent = cEventList[CurrentEventIndex];
+        RemainingEventTime = CurrentClassEvent.Duration;
         RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+
+
+        //Calculate the percentage of each type of class event
+        ClassEvent po = cEventList.Where(x => x.Type == "POSE").First();
+        ClassEvent re = cEventList.Where(x => x.Type == "PREP").First();
+        ClassEvent sh = cEventList.Where(x => x.Type == "SHAVA").FirstOrDefault();
+
+        if (sh != null)
+        {
+            ShavaPercent = (sh.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
+        }
+        PrepPercent = (re.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
+        PosePercent = (po.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
+
+
 
         //Begin the Timer
         StartStopTimer();
@@ -112,14 +182,17 @@
         if (ClassTimer == null)
         {
             // Setup the Timer
+            CurrentEventName = CurrentClassEvent.Name;
+            CurrentEventPicture = CurrentClassEvent.Picture;
+            NextEventName = YogaClass.PoseList[CurrentEventIndex].Name;
             ClassTimer = new Timer(1000);
-            ClassTimer.Elapsed += OnTimedEvent;
             ClassTimer.AutoReset = true;
             ClassTimer.Enabled = true;
+            ClassTimer.Start();
+            ClassTimer.Elapsed += OnTimedEvent;
 
             //Now the timer is running, change the button text.
             StartStopButtonTxt = "Pause";
-            ClassStarted = true;
         }
         else
         {
@@ -134,6 +207,74 @@
                 ClassTimer.Start();
                 StartStopButtonTxt = "Pause";
             }
+        }
+    }
+    public void skip()
+    {
+        ClassTimer.Stop();
+        CurrentEventIndex++;
+        if (CurrentClassEvent.Type == "SHAVA")
+        {
+            TotalPercent += ShavaPercent;
+        }
+        else if (CurrentClassEvent.Type == "POSE")
+        {
+            TotalPercent += PosePercent;
+        }
+        else if (CurrentClassEvent.Type == "PREP")
+        {
+            TotalPercent += PrepPercent;
+        }
+        if (CurrentEventIndex != cEventList.Count)
+        {
+            CurrentClassEvent = cEventList[CurrentEventIndex];
+            CurrentEventName = CurrentClassEvent.Name;
+            CurrentEventPicture = CurrentClassEvent.Picture;
+
+            if (CurrentEventIndex == cEventList.Count - 1)
+            {
+                NextEventName = "Finish";
+            }
+            else
+            {
+                if(CurrentClassEvent.Type == "POSE")
+                NextEventName = cEventList[CurrentEventIndex+2].Name;
+            }
+
+            RemainingClassTime = RemainingClassTime.Subtract(RemainingEventTime);
+            RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
+            RemainingEventTime = CurrentClassEvent.Duration;
+            RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+            
+            fullPath = Path.Combine(paths);
+            wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
+            player = new System.Media.SoundPlayer(wrp);
+            player.Play();
+            ClassTimer.Start();
+        }
+        else
+        {
+
+            CurrentEventPicture = "done.png";
+            CurrentEventName = "Done";
+            NextEventName = "";
+
+            RemainingClassTime = RemainingClassTime.Subtract(RemainingEventTime);
+            RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
+            RemainingEventTime = zeroDuration;
+            RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+            fullPath = Path.Combine(paths);
+            wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
+            player = new System.Media.SoundPlayer(wrp);
+            player.Play();
+            ClassTimer.Stop();
+            ClassTimer.Dispose();
+
+            InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+
         }
     }
 
@@ -161,12 +302,52 @@
                 RemainingEventTime = RemainingEventTime.Subtract(TimeSpan.FromSeconds(1));
                 RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
 
-                string[] paths = { @"d:\archives", "2001", "audio", "Bell.wav" };
-                string fullPath = Path.Combine(paths);
-                Console.WriteLine(fullPath);
+                if (CurrentClassEvent.Type == "SHAVA")
+                {
+                    TotalPercent += ShavaPercent;
+                }
+                else if (CurrentClassEvent.Type == "POSE")
+                {
+                    TotalPercent += PosePercent;
+                }
+                else if (CurrentClassEvent.Type == "PREP")
+                {
+                    TotalPercent += PrepPercent;
+                }
 
-                String wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(wrp);
+                if (CurrentEventIndex != cEventList.Count - 1)
+                {
+                    CurrentClassEvent = cEventList[CurrentEventIndex];
+                    CurrentEventName = CurrentClassEvent.Name;
+                    CurrentEventPicture = CurrentClassEvent.Picture;
+                    if (CurrentEventIndex == cEventList.Count - 2)
+                    {
+                        NextEventName = "Finish";
+                    }
+                    else
+                    {
+                        if(CurrentClassEvent.Type == "POSE")
+                        NextEventName = cEventList[CurrentEventIndex+2].Name;
+                    }
+                    if(CurrentClassEvent.Type == "POSE")
+                    NextEventName = cEventList[CurrentEventIndex+2].Name;
+                    RemainingEventTime = CurrentClassEvent.Duration;
+
+                }
+                else
+                {
+
+                    CurrentEventPicture = "done.png";
+                    CurrentEventName = "Done";
+                    NextEventName = "";
+                    ClassTimer.Stop();
+                    ClassTimer.Dispose();
+
+                }
+
+                fullPath = Path.Combine(paths);
+                wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
+                player = new System.Media.SoundPlayer(wrp);
                 player.Play();
             }
 
