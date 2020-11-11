@@ -2,37 +2,43 @@
 @using System.Timers
 @using System.IO
 
-
-<div class="row d-flex justify-content-center">
-    <div class="d-flex flex-column">
-        <div class="my-3 align-self-center">Current: @CurrentEventName</div>
-        <img src="/images/@CurrentEventPicture" width="200" height="200" />
-        <h1 class="display-4 align-self-center mt-3">
-            <span class="badge badge-pill badge-dark">@RemainingEventTime.ToString("m\\:ss")</span>
-        </h1>
-    </div>
+@*<h3>ClassShowComponet</h3>
+<div class="d-inline-flex">
+    <div>Remaining Class Time:</div>
+    <div class="ml-auto">@RemainingClassTimeDsp</div>
 </div>
+<div class="d-inline-flex">
+    <div>Remaining Event Time:</div>
+    <div class="ml-auto">@RemainingEventTimeDsp</div>
+</div>*@
 
-<div class="progress my-3">
+<div class="progress">
     <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" style="width:@TotalPercent%">@Math.Round(TotalPercent)%</div>
 </div>
+<br />
 
-<div class="row d-flex justify-content-center">
-    Upcoming: @NextEventName
-</div>
 
-<div class="row justify-content-end m-3">
-    <button class="btn btn-primary" @onclick="StartStopTimer">@StartStopButtonTxt</button>
-    @if (CurrentEventIndex != cEventList.Count)
-    {
-        <button class="btn btn-primary mx-3" @onclick="skip">Skip</button>
-    }
-    else
-    {
-        <button class="btn btn-primary mx-3" disabled>Skip</button>
-    }
-</div>
 
+<ul class="list-group">
+    <li class="list-group-item currPose">
+        <img  class="center"src="/images/@CurrentEventPicture" width="200" height="200" /><br />
+        <span>@CurrentEventName</span>
+        <br /><br />
+        <div class="badge-pill badge-dark display-4 slidePill d-flex justify-content-center">&nbsp;@RemainingEventTime.ToString("m\\:ss")&nbsp;</div>
+        <br />
+    </li>
+    <li class="list-group-item currPose">Upcoming: @NextEventName</li>
+</ul>
+
+<button class="btn btn-primary" @onclick="StartStopTimer">@StartStopButtonTxt</button>
+@if (CurrentEventIndex != cEventList.Count)
+{
+    <button class="btn btn-primary" @onclick="skip">Skip</button>
+}
+else
+{
+    <button class="btn btn-primary" disabled>Skip</button>
+}
 
 @code {
     [Parameter]
@@ -44,8 +50,8 @@
     TimeSpan RemainingClassTime;
     TimeSpan RemainingEventTime;
 
-    //String RemainingClassTimeDsp;
-    //String RemainingEventTimeDsp;
+    String RemainingClassTimeDsp;
+    String RemainingEventTimeDsp;
     String StartStopButtonTxt = "Start";
 
     String NextEventName;
@@ -65,6 +71,8 @@
     TimeSpan zeroDuration = TimeSpan.FromSeconds(0.0);
     Timer ClassTimer;
 
+    string[] paths = { @"d:\archives", "2001", "audio", "Bell.wav" };
+    string fullPath;
     String wrp;
     System.Media.SoundPlayer player;
 
@@ -82,6 +90,9 @@
     {
         //Set the total class time.
         RemainingClassTime = new TimeSpan(0, YogaClass.TotalPoseMinutes + YogaClass.ShavasanaDuration, YogaClass.TotalPoseIntervalSeconds);
+
+        // Format the time for mm:ss (use @"mm\:ss" or "mm\\:ss"
+        RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
 
         //Build list of class events
         cEventList = new List<ClassEvent>();
@@ -144,6 +155,8 @@
         //Display the information for the first event.
         CurrentClassEvent = cEventList[CurrentEventIndex];
         RemainingEventTime = CurrentClassEvent.Duration;
+        RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+
 
         //Calculate the percentage of each type of class event
         ClassEvent po = cEventList.Where(x => x.Type == "POSE").First();
@@ -224,13 +237,16 @@
             }
             else
             {
-                if (CurrentClassEvent.Type == "POSE")
-                    NextEventName = cEventList[CurrentEventIndex + 2].Name;
+                if(CurrentClassEvent.Type == "POSE")
+                    NextEventName = cEventList[CurrentEventIndex+2].Name;
             }
 
             RemainingClassTime = RemainingClassTime.Subtract(RemainingEventTime);
+            RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
             RemainingEventTime = CurrentClassEvent.Duration;
+            RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
 
+            fullPath = Path.Combine(paths);
             wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
             player = new System.Media.SoundPlayer(wrp);
             player.Play();
@@ -244,8 +260,10 @@
             NextEventName = "";
 
             RemainingClassTime = RemainingClassTime.Subtract(RemainingEventTime);
+            RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
             RemainingEventTime = zeroDuration;
-            
+            RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
+            fullPath = Path.Combine(paths);
             wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
             player = new System.Media.SoundPlayer(wrp);
             player.Play();
@@ -263,7 +281,9 @@
     public void OnTimedEvent(Object source, ElapsedEventArgs e)
     {
         RemainingClassTime = RemainingClassTime.Subtract(TimeSpan.FromSeconds(1));
+        RemainingClassTimeDsp = RemainingClassTime.ToString(@"mm\:ss");
         RemainingEventTime = RemainingEventTime.Subtract(TimeSpan.FromSeconds(1));
+        RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
 
         //Check is Class has ended.
         if (RemainingClassTime > zeroDuration)
@@ -280,6 +300,7 @@
                 CurrentEventIndex += 1;
                 RemainingEventTime = cEventList[CurrentEventIndex].Duration;
                 RemainingEventTime = RemainingEventTime.Subtract(TimeSpan.FromSeconds(1));
+                RemainingEventTimeDsp = RemainingEventTime.ToString(@"mm\:ss");
 
                 if (CurrentClassEvent.Type == "SHAVA")
                 {
@@ -305,11 +326,11 @@
                     }
                     else
                     {
-                        if (CurrentClassEvent.Type == "POSE")
-                            NextEventName = cEventList[CurrentEventIndex + 2].Name;
+                        if(CurrentClassEvent.Type == "POSE")
+                            NextEventName = cEventList[CurrentEventIndex+2].Name;
                     }
-                    if (CurrentClassEvent.Type == "POSE")
-                        NextEventName = cEventList[CurrentEventIndex + 2].Name;
+                    if(CurrentClassEvent.Type == "POSE")
+                        NextEventName = cEventList[CurrentEventIndex+2].Name;
                     RemainingEventTime = CurrentClassEvent.Duration;
 
                 }
@@ -324,6 +345,7 @@
 
                 }
 
+                fullPath = Path.Combine(paths);
                 wrp = Path.Combine(WebRootPath, "audio", "Bell.wav");
                 player = new System.Media.SoundPlayer(wrp);
                 player.Play();

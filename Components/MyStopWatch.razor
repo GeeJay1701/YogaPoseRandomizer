@@ -1,0 +1,32 @@
+﻿@page "/MyStopWatch"
+<h3>MyStopWatch</h3>
+
+<p><button @onclick="@( async ()=> { StopWatch(); } )">Start</button></p>
+
+<p><button @onclick="@( ()=> { IsStopWatchRunning = false; } )">Pause</button></p>
+
+<p><button @onclick="@( ()=> { StopWatch(); } )">Resume</button></p>
+
+<p><button @onclick="@( ()=> { IsStopWatchRunning = false; StopWatchValue = new TimeSpan(); } )">Stop</button></p>
+
+<p>@StopWatchValue</p>
+
+@code {
+    TimeSpan StopWatchValue = new TimeSpan();
+    bool IsStopWatchRunning = false;
+
+    async Task StopWatch()
+    {
+        IsStopWatchRunning = true;
+        while (IsStopWatchRunning)
+        {
+            await Task.Delay(1000);
+            if (IsStopWatchRunning)
+            {
+                StopWatchValue = StopWatchValue.Add(new TimeSpan(0, 0, 1));
+                StateHasChanged();
+            }
+        }
+    }
+
+}
