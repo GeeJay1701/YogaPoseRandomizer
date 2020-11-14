@@ -4,10 +4,18 @@
 <p>@TimeLeft</p>
 <p>@DisplayText</p>
 
+<p><button @onclick="@( ()=> { IsStopWatchRunning = false; } )">Pause</button></p>
+<p><button @onclick="@(async ()=> { IsStopWatchRunning = true; Timer(); } )">Resume</button></p>
+<p><button @onclick="@( ()=> { TimeLeft = new TimeSpan(); IsStopWatchRunning = false;} )">Stop</button></p>
+
 @code {
 
-    TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+    TimeSpan TimeLeft = new TimeSpan(0, 0, 60);
     string DisplayText = "";
+    Boolean IsStopWatchRunning = true;
+    String wrp;
+    System.Media.SoundPlayer player;
+    int counter = 0;
 
     protected override Task OnInitializedAsync()
     {
@@ -17,11 +25,23 @@
 
     async Task Timer()
     {
-        while (TimeLeft > new TimeSpan())
+        while (TimeLeft > new TimeSpan() && IsStopWatchRunning)
         {
             await Task.Delay(1000);
-            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            StateHasChanged();
+
+            if (IsStopWatchRunning)
+            {
+                counter++;
+                TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+                if (counter % 10 == 0)
+                {
+                    wrp = "C:\\Users\\johns\\source\\repos\\YogaPoseRandomizer\\wwwroot\\audio\\Bell.wav";
+                    player = new System.Media.SoundPlayer(wrp);
+                    player.Play();
+                }
+                StateHasChanged();
+            }
+
         }
         await AfterTime();
         StateHasChanged();
