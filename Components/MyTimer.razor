@@ -1,4 +1,5 @@
 ﻿@page "/MyTimer"
+@using Models
 <h3>MyTimer</h3>
 
 <p>@TimeLeft</p>
@@ -9,6 +10,12 @@
 <p><button @onclick="@( ()=> { TimeLeft = new TimeSpan(); IsStopWatchRunning = false;} )">Stop</button></p>
 
 @code {
+
+    [Parameter]
+    public YogaClass YogaClass { get; set; }
+
+    [Parameter]
+    public String WebRootPath { get; set; }
 
     TimeSpan TimeLeft = new TimeSpan(0, 0, 60);
     string DisplayText = "";
