@@ -17,11 +17,42 @@ namespace YogaPoseRandomizer.Models
         public int ShavasanaDuration { get; set; }
 
         public int TotalPoseMinutes
-        { get { return PoseDuration * PoseList.Length; } }
+        {   
+            get 
+            {
+                int count = 0;
+                foreach (Pose p in PoseList)
+                {
+                    if(p.Type == "Double")
+                    {
+                        count++;
+                    }
+                }
+
+                return PoseDuration * (PoseList.Length + count); 
+            } 
+        }
 
         public int TotalPoseIntervalSeconds
-        { get { return PrepDuration * (PoseList.Length); } }
+        {
+            get
+            {
+                int count = 0;
+                foreach (Pose p in PoseList)
+                {
+                    if (p.Type == "Double")
+                    {
+                        count++;
+                    }
+                }
 
+                if (Shavasana != "None")
+                    return PrepDuration * (PoseList.Length+count+1);
+                else
+                    return PrepDuration * (PoseList.Length+count);
+                
+            }
+        }
         public string TotalClassTimeDsp
         {
             get

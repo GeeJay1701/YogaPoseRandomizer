@@ -124,6 +124,24 @@
             poseEvent.Duration = new TimeSpan(0, YogaClass.PoseDuration, 0);
             poseEvent.PoseIndex = i;
             cEventList.Add(poseEvent);
+
+            if(YogaClass.PoseList[i].Type == "Double")
+            {
+                ClassEvent prepEventDouble = new ClassEvent();
+                prepEventDouble.Type = "PREP";
+                prepEventDouble.Picture = "Prep.png";
+                prepEventDouble.Name = "Prep";
+                prepEventDouble.Duration = new TimeSpan(0, 0, YogaClass.PrepDuration);
+                cEventList.Add(prepEvent);
+
+                ClassEvent poseEventDouble = new ClassEvent();
+                poseEventDouble.Type = "POSE";
+                poseEventDouble.Picture = "Double"+YogaClass.PoseList[i].Picture;
+                poseEventDouble.Name = YogaClass.PoseList[i].Name;
+                poseEventDouble.Duration = new TimeSpan(0, YogaClass.PoseDuration, 0);
+                poseEventDouble.PoseIndex = i;
+               cEventList.Add(poseEventDouble);
+            }
         }
 
         //Check if there is a Shavasana After class
@@ -140,12 +158,14 @@
             poseEvent.Type = "SHAVA";
             poseEvent.Picture = "Shavasana.png";
             poseEvent.Name = "Shavasana";
-            poseEvent.Duration = new TimeSpan(0, 0, YogaClass.ShavasanaDuration);
+            poseEvent.Duration = new TimeSpan(0, YogaClass.ShavasanaDuration, 0);
             cEventList.Add(poseEvent);
         }
 
         //Display the information for the first event.
         CurrentClassEvent = cEventList[CurrentEventIndex];
+        CurrentEventName = CurrentClassEvent.Name;
+        NextEventName = cEventList[CurrentEventIndex + 1].Name;
         RemainingEventTime = CurrentClassEvent.Duration;
 
         //Calculate the percentage of each type of class event
@@ -157,13 +177,15 @@
         {
             ShavaPercent = (sh.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
         }
+
+
         PrepPercent = (re.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
         PosePercent = (po.Duration.TotalSeconds / RemainingClassTime.TotalSeconds) * 100;
 
 
-
         //Begin the Timer
         Timer();
+
         return base.OnInitializedAsync();
     }
 
@@ -173,7 +195,7 @@
 
         while (RemainingClassTime > new TimeSpan() && TimerIsRunning)
         {
-            await Task.Delay(10000);
+            await Task.Delay(1000);
 
             if (TimerIsRunning)
             {
@@ -212,10 +234,10 @@
                         }
                         else
                         {
-                            if (CurrentClassEvent.Type == "POSE")
+                            if (CurrentClassEvent.Type == "POSE" || CurrentClassEvent.Type == "SHAVA")
                                 NextEventName = cEventList[CurrentEventIndex + 2].Name;
                         }
-                        if (CurrentClassEvent.Type == "POSE")
+                        if (CurrentClassEvent.Type == "POSE" || CurrentClassEvent.Type == "SHAVA")
                             NextEventName = cEventList[CurrentEventIndex + 2].Name;
                         RemainingEventTime = CurrentClassEvent.Duration;
 
@@ -254,7 +276,7 @@
         if (TimerIsRunning)
         {
             TimerIsRunning = false;
-            StartStopButtonTxt = "Resume";    
+            StartStopButtonTxt = "Resume";
 
         }
         else
@@ -294,7 +316,7 @@
             }
             else
             {
-                if (CurrentClassEvent.Type == "POSE")
+                if (CurrentClassEvent.Type == "POSE" || CurrentClassEvent.Type == "SHAVA")
                     NextEventName = cEventList[CurrentEventIndex + 2].Name;
             }
 
